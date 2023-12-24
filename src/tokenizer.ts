@@ -1,6 +1,13 @@
 import type { Token } from './types'
 
-import { QUOTE, WHITE_SPACE } from './constants'
+import {
+  CONST_INCREMENT,
+  CONST_KEYWORD,
+  LET_INCREMENT,
+  LET_KEYWORD,
+  QUOTE,
+  WHITE_SPACE,
+} from './constants'
 import {
   getFullString,
   isBoolean,
@@ -48,8 +55,8 @@ export function tokenize(input: string): Array<Token> {
     // From here on, we are sure that the currentChar is a string of some sort
 
     if (isConstKeyword(input, cursor)) {
-      tokens.push({ type: 'Keyword', value: 'const' })
-      cursor += 5
+      tokens.push({ type: 'Keyword', value: CONST_KEYWORD })
+      cursor += CONST_INCREMENT
       cursor++ // to skip the space
       currentChar = input[cursor]
 
@@ -66,8 +73,8 @@ export function tokenize(input: string): Array<Token> {
     }
 
     if (isLetKeyword(input, cursor)) {
-      tokens.push({ type: 'Keyword', value: 'let' })
-      cursor += 3
+      tokens.push({ type: 'Keyword', value: LET_KEYWORD })
+      cursor += LET_INCREMENT
       cursor++ // to skip the space
       currentChar = input[cursor]
 

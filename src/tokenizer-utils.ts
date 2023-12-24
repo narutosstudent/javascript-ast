@@ -1,23 +1,29 @@
-import { WHITE_SPACE } from './constants'
+import {
+  CONST_INCREMENT,
+  CONST_KEYWORD,
+  LET_INCREMENT,
+  LET_KEYWORD,
+  WHITE_SPACE,
+} from './constants'
 
 export const isAlphaBetical = (char: string) => /[a-zA-Z]/.test(char)
 
 export function getLetKeyword(input: string, cursor: number) {
-  return input.slice(cursor, cursor + 3)
+  return input.slice(cursor, cursor + LET_INCREMENT)
 }
 
 export function isLetKeyword(input: string, cursor: number) {
-  const isEndingWithSpace = input[cursor + 3] === WHITE_SPACE
-  return getLetKeyword(input, cursor) === 'let' && isEndingWithSpace
+  const isEndingWithSpace = input[cursor + LET_INCREMENT] === WHITE_SPACE
+  return getLetKeyword(input, cursor) === LET_KEYWORD && isEndingWithSpace
 }
 
 export function getConstKeyword(input: string, cursor: number) {
-  return input.slice(cursor, cursor + 5)
+  return input.slice(cursor, cursor + CONST_INCREMENT)
 }
 
 export function isConstKeyword(input: string, cursor: number) {
-  const isEndingWithSpace = input[cursor + 5] === WHITE_SPACE
-  return getConstKeyword(input, cursor) === 'const' && isEndingWithSpace
+  const isEndingWithSpace = input[cursor + CONST_INCREMENT] === WHITE_SPACE
+  return getConstKeyword(input, cursor) === CONST_KEYWORD && isEndingWithSpace
 }
 
 export function getFullString(input: string, cursor: number) {
