@@ -17,18 +17,18 @@ describe('Tokenizer: Variable declaration', () => {
       ])
     })
 
-    //     it('should tokenize a `let` declaration to string', () => {
-    //       const input = 'let message = "Hello";'
-    //       const tokens = tokenize(input)
+    it('should tokenize a `let` declaration to string', () => {
+      const input = 'let message = "Hello";'
+      const tokens = tokenize(input)
 
-    //       expect(tokens).toEqual([
-    //         { type: 'Keyword', value: 'let' },
-    //         { type: 'Identifier', value: 'message' },
-    //         { type: 'Operator', value: '=' },
-    //         { type: 'StringLiteral', value: '"Hello"' },
-    //         { type: 'Punctuator', value: ';' },
-    //       ])
-    //     })
+      expect(tokens).toEqual([
+        { type: 'Keyword', value: 'let' },
+        { type: 'Identifier', value: 'message' },
+        { type: 'Operator', value: '=' },
+        { type: 'StringLiteral', value: 'Hello' },
+        { type: 'Punctuator', value: ';' },
+      ])
+    })
 
     //     it('should tokenize a `let` declaration to boolean', () => {
     //       const input = 'let isActive = true;'

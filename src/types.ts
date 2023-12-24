@@ -4,6 +4,7 @@ type TokenType =
   | 'Operator'
   | 'NumericLiteral'
   | 'Punctuator'
+  | 'StringLiteral'
 
 export type Token = {
   type: TokenType
