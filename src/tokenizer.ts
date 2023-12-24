@@ -4,6 +4,7 @@ import { QUOTE, WHITE_SPACE } from './constants'
 import {
   getFullString,
   isBoolean,
+  isConstKeyword,
   isLetKeyword,
   isNull,
 } from './tokenizer-utils'
@@ -45,6 +46,24 @@ export function tokenize(input: string): Array<Token> {
     }
 
     // From here on, we are sure that the currentChar is a string of some sort
+
+    if (isConstKeyword(input, cursor)) {
+      tokens.push({ type: 'Keyword', value: 'const' })
+      cursor += 5
+      cursor++ // to skip the space
+      currentChar = input[cursor]
+
+      const { numberToIncrementCursor, fullString } = getFullString(
+        input,
+        cursor
+      )
+
+      tokens.push({ type: 'Identifier', value: fullString })
+      cursor += numberToIncrementCursor
+      currentChar = input[cursor]
+
+      continue
+    }
 
     if (isLetKeyword(input, cursor)) {
       tokens.push({ type: 'Keyword', value: 'let' })

@@ -11,6 +11,15 @@ export function isLetKeyword(input: string, cursor: number) {
   return getLetKeyword(input, cursor) === 'let' && isEndingWithSpace
 }
 
+export function getConstKeyword(input: string, cursor: number) {
+  return input.slice(cursor, cursor + 5)
+}
+
+export function isConstKeyword(input: string, cursor: number) {
+  const isEndingWithSpace = input[cursor + 5] === WHITE_SPACE
+  return getConstKeyword(input, cursor) === 'const' && isEndingWithSpace
+}
+
 export function getFullString(input: string, cursor: number) {
   let numberToIncrementCursor = 0
   let fullString = ''
