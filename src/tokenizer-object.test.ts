@@ -18,22 +18,22 @@ describe('Tokenizer: Object Literal Declaration', () => {
       ])
     })
 
-    //   it('should tokenize a `let` declaration with an object containing one property', () => {
-    //     const input = 'let obj = { key: "value" };'
-    //     const tokens = tokenize(input)
+    it('should tokenize a `let` declaration with an object containing one property', () => {
+      const input = 'let obj = { key: "value" };'
+      const tokens = tokenize(input)
 
-    //     expect(tokens).toEqual([
-    //       { type: 'Keyword', value: 'let' },
-    //       { type: 'Identifier', value: 'obj' },
-    //       { type: 'Operator', value: '=' },
-    //       { type: 'Punctuator', value: '{' },
-    //       { type: 'Identifier', value: 'key' },
-    //       { type: 'Punctuator', value: ':' },
-    //       { type: 'StringLiteral', value: 'value' },
-    //       { type: 'Punctuator', value: '}' },
-    //       { type: 'Punctuator', value: ';' },
-    //     ])
-    //   })
+      expect(tokens).toEqual([
+        { type: 'Keyword', value: 'let' },
+        { type: 'Identifier', value: 'obj' },
+        { type: 'Operator', value: '=' },
+        { type: 'Punctuator', value: '{' },
+        { type: 'Identifier', value: 'key' },
+        { type: 'Punctuator', value: ':' },
+        { type: 'StringLiteral', value: 'value' },
+        { type: 'Punctuator', value: '}' },
+        { type: 'Punctuator', value: ';' },
+      ])
+    })
 
     //   it('should tokenize a `let` declaration with an object containing multiple properties', () => {
     //     const input = 'let obj = { a: 1, b: 2 };'
