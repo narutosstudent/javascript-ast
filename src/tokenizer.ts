@@ -16,6 +16,8 @@ import {
   isNull,
 } from './tokenizer-utils'
 
+// doing tdd
+
 export function tokenize(input: string): Array<Token> {
   const tokens: Array<Token> = []
 
@@ -31,6 +33,20 @@ export function tokenize(input: string): Array<Token> {
 
     if (currentChar === ';') {
       tokens.push({ type: 'Punctuator', value: ';' })
+      cursor++
+      currentChar = input[cursor]
+      continue
+    }
+
+    if (currentChar === '{') {
+      tokens.push({ type: 'Punctuator', value: '{' })
+      cursor++
+      currentChar = input[cursor]
+      continue
+    }
+
+    if (currentChar === '}') {
+      tokens.push({ type: 'Punctuator', value: '}' })
       cursor++
       currentChar = input[cursor]
       continue
@@ -132,6 +148,5 @@ export function tokenize(input: string): Array<Token> {
     currentChar = input[cursor]
   }
 
-  console.log('tokens', tokens)
   return tokens
 }
