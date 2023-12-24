@@ -1,28 +1,12 @@
 import type { Token } from './types'
 
-const isAlphaBetical = (char: string) => /[a-zA-Z]/.test(char)
-
-function getLetKeyword(input: string, cursor: number) {
-  return input.slice(cursor, cursor + 3)
-}
-
-function isLetKeyword(input: string, cursor: number) {
-  const isEndingWithSpace = input[cursor + 3] === ' '
-  return getLetKeyword(input, cursor) === 'let' && isEndingWithSpace
-}
-
-function getFullString(input: string, cursor: number) {
-  let numberToIncrementCursor = 0
-  let fullString = ''
-
-  // This loops till the string is closed
-  while (isAlphaBetical(input[cursor + numberToIncrementCursor])) {
-    fullString += input[cursor + numberToIncrementCursor]
-    numberToIncrementCursor++
-  }
-
-  return { numberToIncrementCursor, fullString }
-}
+import { QUOTE, WHITE_SPACE } from './constants'
+import {
+  getFullString,
+  getLetKeyword,
+  isAlphaBetical,
+  isLetKeyword,
+} from './tokenizer-utils'
 
 export function tokenize(input: string): Array<Token> {
   const tokens: Array<Token> = []
@@ -31,7 +15,7 @@ export function tokenize(input: string): Array<Token> {
   let currentChar = input[cursor]
 
   while (cursor < input.length) {
-    if (currentChar === ' ') {
+    if (currentChar === WHITE_SPACE) {
       cursor++
       currentChar = input[cursor]
       continue
@@ -78,8 +62,8 @@ export function tokenize(input: string): Array<Token> {
       continue
     }
 
-    const isCurrentCharString = currentChar === '"'
-    if (isCurrentCharString) {
+    const isCurrentCharStartOfString = currentChar === `${QUOTE}`
+    if (isCurrentCharStartOfString) {
       cursor++
       const { numberToIncrementCursor, fullString } = getFullString(
         input,
