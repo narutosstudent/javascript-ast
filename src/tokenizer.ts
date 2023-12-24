@@ -1,12 +1,19 @@
 import type { Token } from './types'
 
 import { QUOTE, WHITE_SPACE } from './constants'
-import {
-  getFullString,
-  getLetKeyword,
-  isAlphaBetical,
-  isLetKeyword,
-} from './tokenizer-utils'
+import { getFullString, isLetKeyword } from './tokenizer-utils'
+
+function isBoolean(input: string, cursor: number) {
+  const falseBoolean = input.slice(cursor, cursor + 5)
+  const trueBoolean = input.slice(cursor, cursor + 4)
+
+  return falseBoolean === 'false' || trueBoolean === 'true'
+}
+
+function isNull(input: string, cursor: number) {
+  const nullString = input.slice(cursor, cursor + 4)
+  return nullString === 'null'
+}
 
 export function tokenize(input: string): Array<Token> {
   const tokens: Array<Token> = []
@@ -44,6 +51,8 @@ export function tokenize(input: string): Array<Token> {
       continue
     }
 
+    // From here on, we are sure that the currentChar is a string of some sort
+
     if (isLetKeyword(input, cursor)) {
       tokens.push({ type: 'Keyword', value: 'let' })
       cursor += 3
@@ -59,6 +68,30 @@ export function tokenize(input: string): Array<Token> {
       cursor += numberToIncrementCursor
       currentChar = input[cursor]
 
+      continue
+    }
+
+    if (isNull(input, cursor)) {
+      const { numberToIncrementCursor, fullString } = getFullString(
+        input,
+        cursor
+      )
+
+      tokens.push({ type: 'NullLiteral', value: fullString })
+      cursor += numberToIncrementCursor
+      currentChar = input[cursor]
+      continue
+    }
+
+    if (isBoolean(input, cursor)) {
+      const { numberToIncrementCursor, fullString } = getFullString(
+        input,
+        cursor
+      )
+
+      tokens.push({ type: 'BooleanLiteral', value: fullString })
+      cursor += numberToIncrementCursor
+      currentChar = input[cursor]
       continue
     }
 

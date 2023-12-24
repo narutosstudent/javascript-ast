@@ -5,6 +5,8 @@ type TokenType =
   | 'NumericLiteral'
   | 'Punctuator'
   | 'StringLiteral'
+  | 'BooleanLiteral'
+  | 'NullLiteral'
 
 export type Token = {
   type: TokenType
