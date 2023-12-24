@@ -23,3 +23,15 @@ export function getFullString(input: string, cursor: number) {
 
   return { numberToIncrementCursor, fullString }
 }
+
+export function isBoolean(input: string, cursor: number) {
+  const falseBoolean = input.slice(cursor, cursor + 5)
+  const trueBoolean = input.slice(cursor, cursor + 4)
+
+  return falseBoolean === 'false' || trueBoolean === 'true'
+}
+
+export function isNull(input: string, cursor: number) {
+  const nullString = input.slice(cursor, cursor + 4)
+  return nullString === 'null'
+}

@@ -1,19 +1,12 @@
 import type { Token } from './types'
 
 import { QUOTE, WHITE_SPACE } from './constants'
-import { getFullString, isLetKeyword } from './tokenizer-utils'
-
-function isBoolean(input: string, cursor: number) {
-  const falseBoolean = input.slice(cursor, cursor + 5)
-  const trueBoolean = input.slice(cursor, cursor + 4)
-
-  return falseBoolean === 'false' || trueBoolean === 'true'
-}
-
-function isNull(input: string, cursor: number) {
-  const nullString = input.slice(cursor, cursor + 4)
-  return nullString === 'null'
-}
+import {
+  getFullString,
+  isBoolean,
+  isLetKeyword,
+  isNull,
+} from './tokenizer-utils'
 
 export function tokenize(input: string): Array<Token> {
   const tokens: Array<Token> = []
