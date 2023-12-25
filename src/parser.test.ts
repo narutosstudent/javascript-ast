@@ -61,7 +61,7 @@ describe('Parser: Variable declaration', () => {
     })
   })
 
-  it.only('should parse a `let` declaration with a boolean', () => {
+  it('should parse a `let` declaration with a boolean', () => {
     const tokens: Array<Token> = [
       { type: 'Keyword', value: 'let' },
       { type: 'Identifier', value: 'isActive' },
