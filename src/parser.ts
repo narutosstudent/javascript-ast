@@ -31,6 +31,10 @@ function parseAllTokensOfLet(
       declarationInfo.Literal = token.value
     }
 
+    if (token.type === 'BooleanLiteral') {
+      declarationInfo.Literal = Boolean(token.value)
+    }
+
     if (token.type === 'NumericLiteral') {
       declarationInfo.Literal = Number(token.value)
     }
