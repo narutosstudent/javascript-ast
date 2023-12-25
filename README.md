@@ -7,7 +7,7 @@ My attempt to write a JavaScript AST parser from scratch. This is a work in prog
 - Tokenizer for basic JavaScript syntax.
 - Parser to create an AST for simple variable declarations.
 
-Optional: error handling
+Bonus: error handling
 
 - [x] Primitive types
 - [ ] Object types
