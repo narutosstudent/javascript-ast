@@ -29,7 +29,7 @@ export interface DeclarationNode {
 interface VariableDeclaratorNode {
   type: 'VariableDeclarator'
   id: IdentifierNode
-  init: LiteralNode | null // Assuming init can be null
+  init: LiteralNode
 }
 
 interface IdentifierNode {

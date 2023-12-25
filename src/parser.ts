@@ -30,51 +30,78 @@ import type { AST, DeclarationNode, Token } from './types'
 //     })
 //   })
 
-type TypeOfOperation = 'variableDeclaration' | 'start'
+function parseAllTokensOfLet(
+  tokens: Array<Token>,
+  index: number
+): {
+  declarationInfo: {
+    Identifier: DeclarationNode['declarations'][0]['id']['name']
+    Literal: DeclarationNode['declarations'][0]['init']['value']
+  }
+  index: number
+} {
+  const declarationInfo: {
+    Identifier: DeclarationNode['declarations'][0]['id']['name']
+    Literal: DeclarationNode['declarations'][0]['init']['value']
+  } = {
+    Identifier: '',
+    Literal: null,
+  }
+
+  for (let i = index; i < tokens.length; i++) {
+    const token = tokens[i]
+
+    if (token.type === 'Identifier') {
+      declarationInfo.Identifier = token.value
+    }
+
+    if (token.type === 'NumericLiteral') {
+      declarationInfo.Literal = Number(token.value)
+    }
+
+    if (token.type === 'Punctuator') {
+      if (token.value === ';') {
+        return {
+          declarationInfo,
+          index: i,
+        }
+      }
+    }
+  }
+
+  return {
+    declarationInfo,
+    index,
+  }
+}
 
 export function parser(tokens: Array<Token>): AST {
-  const initialObject: AST = {
+  const ast: AST = {
     type: 'Program',
     body: [],
   }
 
-  let currentOperation: TypeOfOperation = 'start'
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i]
 
-  const ast = tokens.reduce((acc, token) => {
-    if (token.type === 'Keyword' && token.value === 'let') {
-      currentOperation = 'variableDeclaration'
-    }
-
-    if (currentOperation === 'variableDeclaration') {
-      if (token.type === 'Identifier') {
-        const declarationNode: DeclarationNode = {
+    if (token.type === 'Keyword') {
+      if (token.value === 'let') {
+        const { declarationInfo, index } = parseAllTokensOfLet(tokens, i)
+        i = index
+        ast.body.push({
           type: 'VariableDeclaration',
           declarations: [
             {
               type: 'VariableDeclarator',
-              id: { type: 'Identifier', name: token.value },
-              init: null,
+              id: { type: 'Identifier', name: declarationInfo.Identifier },
+              init: { type: 'Literal', value: declarationInfo.Literal },
             },
           ],
           kind: 'let',
-        }
-
-        acc.body.push(declarationNode)
-      }
-
-      if (token.type === 'NumericLiteral') {
-        const lastDeclarationNode = acc.body[
-          acc.body.length - 1
-        ] as DeclarationNode
-        lastDeclarationNode.declarations[0].init = {
-          type: 'Literal',
-          value: Number(token.value),
-        }
+        })
       }
     }
-
-    return acc
-  }, initialObject)
+  }
 
   return ast
 }
