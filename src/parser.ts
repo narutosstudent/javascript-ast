@@ -27,6 +27,10 @@ function parseAllTokensOfLet(
       declarationInfo.Identifier = token.value
     }
 
+    if (token.type === 'StringLiteral') {
+      declarationInfo.Literal = token.value
+    }
+
     if (token.type === 'NumericLiteral') {
       declarationInfo.Literal = Number(token.value)
     }
@@ -57,21 +61,20 @@ export function parser(tokens: Array<Token>): AST {
     const token = tokens[i]
 
     if (token.type === 'Keyword') {
-      if (token.value === 'let') {
-        const { declarationInfo, index } = parseAllTokensOfLet(tokens, i)
-        i = index
-        ast.body.push({
-          type: 'VariableDeclaration',
-          declarations: [
-            {
-              type: 'VariableDeclarator',
-              id: { type: 'Identifier', name: declarationInfo.Identifier },
-              init: { type: 'Literal', value: declarationInfo.Literal },
-            },
-          ],
-          kind: 'let',
-        })
-      }
+      const keywordValue = token.value
+      const { declarationInfo, index } = parseAllTokensOfLet(tokens, i)
+      i = index
+      ast.body.push({
+        type: 'VariableDeclaration',
+        declarations: [
+          {
+            type: 'VariableDeclarator',
+            id: { type: 'Identifier', name: declarationInfo.Identifier },
+            init: { type: 'Literal', value: declarationInfo.Literal },
+          },
+        ],
+        kind: keywordValue as 'let' | 'const',
+      })
     }
   }
 
