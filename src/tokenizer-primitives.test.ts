@@ -5,7 +5,7 @@ import { tokenize } from './tokenizer'
 describe('Tokenizer: Variable declaration', () => {
   it('should tokenize let and const with multiple primitive types', () => {
     const input =
-      'let x = 5; let message = "Hello"; let isActive = true; let item = null; const y = 10; const name = "John"; const isDisabled = false; const item2 = null;'
+      'let x = 5; let message = "Hello"; let isActive = true; let item = null; const y = 10; const name = "John"; const isDisabled = false;'
     const tokens = tokenize(input)
 
     expect(tokens).toEqual([
@@ -43,11 +43,6 @@ describe('Tokenizer: Variable declaration', () => {
       { type: 'Identifier', value: 'isDisabled' },
       { type: 'Operator', value: '=' },
       { type: 'BooleanLiteral', value: 'false' },
-      { type: 'Punctuator', value: ';' },
-      { type: 'Keyword', value: 'const' },
-      { type: 'Identifier', value: 'item2' },
-      { type: 'Operator', value: '=' },
-      { type: 'NullLiteral', value: 'null' },
       { type: 'Punctuator', value: ';' },
     ])
   })

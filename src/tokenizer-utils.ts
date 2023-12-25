@@ -8,6 +8,8 @@ import {
 
 export const isAlphaBetical = (char: string) => /[a-zA-Z]/.test(char)
 
+export const isNumeric = (char: string) => /[0-9]/.test(char)
+
 export function getLetKeyword(input: string, cursor: number) {
   return input.slice(cursor, cursor + LET_INCREMENT)
 }
@@ -37,6 +39,19 @@ export function getFullString(input: string, cursor: number) {
   }
 
   return { numberToIncrementCursor, fullString }
+}
+
+export function getFullNumber(input: string, cursor: number) {
+  let numberToIncrementCursor = 0
+  let fullNumber = ''
+
+  // This loops till the number is closed
+  while (isNumeric(input[cursor + numberToIncrementCursor])) {
+    fullNumber += input[cursor + numberToIncrementCursor]
+    numberToIncrementCursor++
+  }
+
+  return { numberToIncrementCursor, fullNumber }
 }
 
 export function isBoolean(input: string, cursor: number) {

@@ -9,6 +9,7 @@ import {
   WHITE_SPACE,
 } from './constants'
 import {
+  getFullNumber,
   getFullString,
   isBoolean,
   isConstKeyword,
@@ -62,9 +63,15 @@ export function tokenize(input: string): Array<Token> {
     // isNan to ensure that the currentChar is a number
     const isCurrentCharNumeric = !isNaN(Number(currentChar))
     if (isCurrentCharNumeric) {
-      tokens.push({ type: 'NumericLiteral', value: currentChar })
-      cursor++
+      const { fullNumber, numberToIncrementCursor } = getFullNumber(
+        input,
+        cursor
+      )
+
+      tokens.push({ type: 'NumericLiteral', value: fullNumber })
+      cursor += numberToIncrementCursor
       currentChar = input[cursor]
+
       continue
     }
 
