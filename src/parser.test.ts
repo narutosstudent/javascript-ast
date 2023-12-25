@@ -1,4 +1,4 @@
-import type { Token } from './tokenizer'
+import type { Token } from './types'
 
 import { expect, it, describe } from 'vitest'
 
