@@ -4,7 +4,7 @@ import { expect, it, describe } from 'vitest'
 
 import { parser } from './parser'
 
-describe.skip('Parser: Variable declaration', () => {
+describe('Parser: Variable declaration', () => {
   it('should parse a `let` declaration with a number', () => {
     const tokens: Array<Token> = [
       { type: 'Keyword', value: 'let' },
